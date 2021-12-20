@@ -63,39 +63,39 @@ li {
   width: 14px;
   height: 14px;
 
-  background-image: url("./images/chart.png");
+  background-image: url("../images/chart.png");
 }
 
 .icon.icon--home {
   width: 23.33px;
   height: 19.83px;
 
-  background-image: url("./images/home.png");
+  background-image: url("../images/home.png");
 }
 
 .icon.icon--transfer {
   width: 32px;
   height: 22px;
 
-  background-image: url("./images/transfer.png");
+  background-image: url("../images/transfer.png");
 }
 
 .icon.icon--msg {
   width: 24px;
   height: 21.96px;
 
-  background-image: url("./images/msg.png");
+  background-image: url("../images/msg.png");
 }
 
 .icon.icon--more {
   width: 26.27px;
   height: 6px;
 
-  background-image: url("./images/more.png");
+  background-image: url("../images/more.png");
 }
 
 .container {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .hide {
@@ -394,18 +394,16 @@ li {
 }
 
 .account__history .history__saving {
-  width: 308px;
+  /* width: 308px;
   height: 49px;
 
   margin: 6px 37px 0 30px;
 
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
+  align-items: flex-end; */
 }
 
 .account__history .history__saving .container {
-  display: flex;
+  /* display: flex; */
 }
 
 .account__history .history__saving .container .saving-box {
