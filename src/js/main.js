@@ -1,5 +1,17 @@
 const container = document.getElementById("root");
 
+const mouseMotion = {
+  isMove: false,
+  before: {
+    x: 0,
+    y: 0,
+  },
+  after: {
+    x: 0,
+    y: 0,
+  },
+};
+
 function mainPage() {
   let template = `
    <div class="wrap">
@@ -189,6 +201,11 @@ function mainPage() {
   container.innerHTML = template;
 }
 
+function nowWH() {
+  console.log(`w: ${document.documentElement.clientWidth}`);
+  console.log(`h: ${document.documentElement.clientHeight}`);
+}
+
 function router() {
   const routePath = location.hash;
 
@@ -197,6 +214,60 @@ function router() {
   }
 }
 
+//============================
+// router events
+//============================
 window.addEventListener("hashchange", router);
 
+//============================
+// mouse events
+//============================
+window.addEventListener(
+  "resize",
+  _.throttle(function () {
+    // _.throttle(함수, 시간)
+    // event가 너무 많이 발생되어 생기는 부하를 줄여줌
+    // throttle n초마다 익명함수를 실행
+    nowWH();
+  }, 300)
+);
+
+window.addEventListener("mousedown", function (e) {
+  mouseMotion.isMove = true;
+  mouseMotion.before.x = e.clientX;
+  mouseMotion.before.y = e.clientY;
+});
+window.addEventListener("mouseup", function (e) {
+  mouseMotion.isMove = false;
+  mouseMotion.after.x = e.clientX;
+  mouseMotion.after.y = e.clientY;
+
+  // 왼쪽인지, 오른인지 위인지 아래인지 방향 계산
+  const diffX = mouseMotion.after.x - mouseMotion.before.x;
+  const diffY = mouseMotion.after.y - mouseMotion.before.y;
+
+  // for X
+  if (diffX > 0) {
+    console.log("to left");
+  } else if (diffX < 0) {
+    console.log("to right");
+  }
+
+  // for Y
+  // if (diffY > 0) {
+  //   console.log("to down");
+  // } else if (diffY < 0) {
+  //   console.log("to up");
+  // }
+
+  // 초기화
+  mouseMotion.before.x = 0;
+  mouseMotion.before.y = 0;
+  mouseMotion.after.x = 0;
+  mouseMotion.after.y = 0;
+});
+
+//============================
+// initalize functions
+//============================
 router();

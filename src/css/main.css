@@ -2,43 +2,16 @@
   font-family: "Noto Sans CJK KR", "Nanum Gothic", "sans-serif";
   font-size: 14px;
   line-height: 21px;
+
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body {
   color: #333;
-}
-a {
-  text-decoration: none;
-  /* NON DRAG */
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-strong {
-  /* NON DRAG */
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-span {
-  /* NON DRAG */
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-h2 {
-  /* NON DRAG */
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
 }
 img {
   /* img(인라인 요소) 하단에 Baseline 공백을 제거 */
@@ -394,16 +367,16 @@ li {
 }
 
 .account__history .history__saving {
-  /* width: 308px;
+  width: 308px;
   height: 49px;
 
   margin: 6px 37px 0 30px;
 
-  align-items: flex-end; */
+  align-items: flex-end;
 }
 
 .account__history .history__saving .container {
-  /* display: flex; */
+  display: flex;
 }
 
 .account__history .history__saving .container .saving-box {
