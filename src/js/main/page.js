@@ -1,3 +1,5 @@
+import { getAccountHistory } from "./account_history";
+
 const container = document.getElementById("root");
 
 const mouseMotion = {
@@ -12,7 +14,7 @@ const mouseMotion = {
   },
 };
 
-function mainPage() {
+export function mainPage() {
   let template = `
    <div class="wrap">
       <section class="native"></section>
@@ -114,130 +116,25 @@ function mainPage() {
             <div class="swiper-pagination"></div>
           </div>
           <div class="history__recent">
-            <div class="container">
-              <div class="day">
-                <div class="day-summary">
-                  <strong>오늘</strong>
-                  <span class="total-spend">127,600원 지출</span>
-                </div>
-                <ul>
-                  <li>
-                    미스터피자
-                    <span class="price">32,000</span>
-                  </li>
-                  <li>
-                    택시
-                    <span class="price">4,800</span>
-                  </li>
-                  <li>
-                    이마트
-                    <span class="price">86,000</span>
-                  </li>
-                  <li>
-                    스타벅스
-                    <span class="price">4,800</span>
-                  </li>
-                  <li>
-                    전길수
-                    <span class="price">+20,000</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="day">
-                <div class="day-summary">
-                  <strong>어제</strong>
-                  <span class="total-spend">71,600원 지출</span>
-                </div>
-                <ul>
-                  <li>
-                    미스터피자
-                    <span class="price">32,000</span>
-                  </li>
-                  <li>
-                    택시
-                    <span class="price">4,800</span>
-                  </li>
-                  <li>
-                    이마트
-                    <span class="price">86,000</span>
-                  </li>
-                  <li>
-                    스타벅스
-                    <span class="price">4,800</span>
-                  </li>
-                  <li>
-                    전길수
-                    <span class="price">+20,000</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="day">
-                <strong>2일전</strong>
-                <span class="total-spend">71,600원 지출</span>
-                <ul>
-                  <li>
-                    미스터피자
-                    <span class="price">32,000</span>
-                  </li>
-                  <li>
-                    택시
-                    <span class="price">4,800</span>
-                  </li>
-                  <li>
-                    스타벅스
-                    <span class="price">11,100</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {{__account_historys__}}
           </div>
         </section>
       </section>
     </div>
   `;
 
+  template = template.replace("{{__account_historys__}}", getAccountHistory());
+
   container.innerHTML = template;
 }
 
-function nowWH() {
-  console.log(`w: ${document.documentElement.clientWidth}`);
-  console.log(`h: ${document.documentElement.clientHeight}`);
-}
-
-function router() {
-  const routePath = location.hash;
-
-  if (routePath === "") {
-    mainPage();
-  }
-}
-
-//============================
-// router events
-//============================
-window.addEventListener("hashchange", router);
-
-//============================
-// mouse events
-//============================
-window.addEventListener(
-  "resize",
-  _.throttle(function () {
-    // _.throttle(함수, 시간)
-    // event가 너무 많이 발생되어 생기는 부하를 줄여줌
-    // throttle n초마다 익명함수를 실행
-    nowWH();
-  }, 300)
-);
-
-window.addEventListener("mousedown", function (e) {
+function downHandler(e) {
   mouseMotion.isMove = true;
   mouseMotion.before.x = e.clientX;
   mouseMotion.before.y = e.clientY;
-});
-window.addEventListener("mouseup", function (e) {
+}
+
+function upHandler(e) {
   mouseMotion.isMove = false;
   mouseMotion.after.x = e.clientX;
   mouseMotion.after.y = e.clientY;
@@ -254,20 +151,41 @@ window.addEventListener("mouseup", function (e) {
   }
 
   // for Y
-  // if (diffY > 0) {
-  //   console.log("to down");
-  // } else if (diffY < 0) {
-  //   console.log("to up");
-  // }
+  if (diffY > 0) {
+    console.log("to down");
+  } else if (diffY < 0) {
+    console.log("to up");
+  }
 
   // 초기화
   mouseMotion.before.x = 0;
   mouseMotion.before.y = 0;
   mouseMotion.after.x = 0;
   mouseMotion.after.y = 0;
-});
+}
+
+function nowWH() {
+  console.log(`w: ${document.documentElement.clientWidth}`);
+  console.log(`h: ${document.documentElement.clientHeight}`);
+}
 
 //============================
-// initalize functions
+// resize events
 //============================
-router();
+window.addEventListener(
+  "resize",
+  _.throttle(function () {
+    // _.throttle(함수, 시간)
+    // event가 너무 많이 발생되어 생기는 부하를 줄여줌
+    // throttle n초마다 익명함수를 실행
+    nowWH();
+  }, 500)
+);
+
+//============================
+// mouse/touch up down events
+//============================
+window.addEventListener("mousedown", downHandler);
+window.addEventListener("touchstart", downHandler);
+window.addEventListener("mouseup", upHandler);
+window.addEventListener("touchend", upHandler);
