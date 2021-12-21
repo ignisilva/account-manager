@@ -1,4 +1,4 @@
-function numToWon(number) {
+export function numToWon(number) {
   return String(number)
     .split("")
     .reverse()

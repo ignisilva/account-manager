@@ -1,4 +1,5 @@
 import { getData } from "../common/data";
+import { numToWon } from "../common/utils";
 
 const store = {
   historys: [],
@@ -39,8 +40,8 @@ function getDayHistory(daysData) {
       "{{__history_price__}}",
       `${
         dayData.income === "out"
-          ? `<span>${dayData.price}</span>`
-          : `<span class="income">+${dayData.price}</span>`
+          ? `<span>${numToWon(dayData.price)}</span>`
+          : `<span class="income">+${numToWon(dayData.price)}</span>`
       }`
     );
 
@@ -49,8 +50,8 @@ function getDayHistory(daysData) {
 
   totalSpend =
     totalSpend > 0
-      ? Math.abs(totalSpend) + "원 수입"
-      : Math.abs(totalSpend) + "원 지출";
+      ? numToWon(Math.abs(totalSpend)) + "원 수입"
+      : numToWon(Math.abs(totalSpend)) + "원 지출";
 
   return [numOfDaysPassed, totalSpend, dayEls];
 }
