@@ -47,6 +47,11 @@ function getDayHistory(daysData) {
     dayEls.push(dayTemplate);
   });
 
+  totalSpend =
+    totalSpend > 0
+      ? Math.abs(totalSpend) + "원 수입"
+      : Math.abs(totalSpend) + "원 지출";
+
   return [numOfDaysPassed, totalSpend, dayEls];
 }
 
