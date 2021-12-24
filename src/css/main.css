@@ -227,9 +227,6 @@ li {
   text-decoration: underline;
 }
 
-.account__status {
-}
-
 .account__status .status__total {
   font-style: normal;
   font-weight: 500;
@@ -384,14 +381,12 @@ li {
 
   margin: 6px 37px 0 30px;
 
-  align-items: flex-end;
-}
-
-.account__history .history__saving .container {
   display: flex;
+  align-items: flex-end;
+  background-color: blueviolet;
 }
 
-.account__history .history__saving .container .saving-box {
+.account__history .history__saving .saving-box {
   width: 162px;
   height: 47px;
   min-width: 162px;
@@ -413,7 +408,7 @@ li {
   position: relative;
 }
 
-.account__history .history__saving .container .saving-box strong {
+.account__history .history__saving .saving-box strong {
   margin-left: 13px;
   z-index: 2;
 
@@ -421,7 +416,7 @@ li {
   line-height: 18px;
 }
 
-.account__history .history__saving .container .saving-box span {
+.account__history .history__saving .saving-box span {
   margin-left: 13px;
   z-index: 2;
 
@@ -429,7 +424,7 @@ li {
   line-height: 18px;
 }
 
-.account__history .history__saving .container .saving-box .achieve {
+.account__history .history__saving .saving-box .achieve {
   width: 30%; /* 성취에 따른 가변값 */
   height: 100%;
 
@@ -437,6 +432,27 @@ li {
   border-radius: 6px 0 0 6px; /* if 100%, npx; / else npx 0 0 npx */
 
   position: absolute;
+}
+
+.account__history .history__saving .add-btn {
+  width: 148px;
+  height: 47px;
+  min-width: 148px;
+
+  background-color: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account__history .history__saving .add-btn span {
+  color: #ff5f00;
+}
+
+.account__history .history__saving .add-btn .text {
+  margin-left: 4px;
+  font-size: 14px;
 }
 
 .account__history .history__recent {
