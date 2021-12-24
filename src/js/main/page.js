@@ -96,24 +96,26 @@ export function mainPage() {
         <section class="account__history">
           <h3 class="hide">history</h3>
           <div class="history__more">
-            <div class="controll-space">
+            <div class="controll-btn">
               <div class="controll-bar"></div>
             </div>
           </div>
-          <div class="history__saving">
-            <div class="saving-box">
-              <div class="achieve"></div>
-              <strong>여행가자!</strong>
-              <span class="price">842,200원</span>
-            </div>
-            <div class="saving-box">
-              <div class="achieve"></div>
-              <strong>냉장고사기!</strong>
-              <span class="price">142,200원</span>
-            </div>
-            <div class="add-btn">
-              <span class="material-icons-outlined">add_circle</span>
-              <span class="text">저금통 만들기</span>
+          <div class="history__saving swiper">
+            <div class="swiper-wrapper">
+              <div class="saving-box swiper-slide">
+                <div class="achieve"></div>
+                <strong>여행가자!</strong>
+                <span class="price">842,200원</span>
+              </div>
+              <div class="saving-box swiper-slide">
+                <div class="achieve"></div>
+                <strong>냉장고사기!</strong>
+                <span class="price">142,200원</span>
+              </div>
+              <div class="add-btn swiper-slide">
+                <span class="material-icons-outlined">add_circle</span>
+                <span class="text">저금통 만들기</span>
+              </div>
             </div>
           </div>
           <div class="history__recent">
