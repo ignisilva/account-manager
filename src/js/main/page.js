@@ -1,4 +1,6 @@
-import { getAccountHistory } from "./account_history";
+import { getHistoryMore } from "./account/history/more";
+import { getHistorySaving } from "./account/history/saving";
+import { getHistoryRecent } from "./account/history/recent";
 
 const container = document.getElementById("root");
 
@@ -96,37 +98,22 @@ export function mainPage() {
         <section class="account__history">
           <h3 class="hide">history</h3>
           <div class="history__more">
-            <div class="controll-btn">
-              <div class="controll-bar"></div>
-            </div>
+            {{__history_more__}}
           </div>
           <div class="history__saving swiper">
-            <div class="swiper-wrapper">
-              <div class="saving-box swiper-slide">
-                <div class="achieve"></div>
-                <strong>여행가자!</strong>
-                <span class="price">842,200원</span>
-              </div>
-              <div class="saving-box swiper-slide">
-                <div class="achieve"></div>
-                <strong>냉장고사기!</strong>
-                <span class="price">142,200원</span>
-              </div>
-              <div class="add-btn swiper-slide">
-                <span class="material-icons-outlined">add_circle</span>
-                <span class="text">저금통 만들기</span>
-              </div>
-            </div>
+            {{__history_saving__}}
           </div>
           <div class="history__recent">
-            {{__account_historys__}}
+            {{__history_recent__}}
           </div>
         </section>
       </section>
     </div>
   `;
 
-  template = template.replace("{{__account_historys__}}", getAccountHistory());
+  template = template.replace("{{__history_more__}}", getHistoryMore());
+  template = template.replace("{{__history_saving__}}", getHistorySaving());
+  template = template.replace("{{__history_recent__}}", getHistoryRecent());
 
   container.innerHTML = template;
 }
@@ -171,19 +158,6 @@ function nowWH() {
   console.log(`w: ${document.documentElement.clientWidth}`);
   console.log(`h: ${document.documentElement.clientHeight}`);
 }
-
-//============================
-// resize events
-//============================
-window.addEventListener(
-  "resize",
-  _.throttle(function () {
-    // _.throttle(함수, 시간)
-    // event가 너무 많이 발생되어 생기는 부하를 줄여줌
-    // throttle n초마다 익명함수를 실행
-    nowWH();
-  }, 500)
-);
 
 //============================
 // mouse/touch up down events

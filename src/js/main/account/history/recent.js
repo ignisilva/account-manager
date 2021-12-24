@@ -1,5 +1,5 @@
-import { getData } from "../common/data";
-import { numToWon } from "../common/utils";
+import { getData } from "../../../common/data";
+import { numToWon } from "../../../common/utils";
 
 const store = {
   historys: [],
@@ -90,7 +90,7 @@ function getDays(accountHistorysData) {
   return daysEls;
 }
 
-export function getAccountHistory(page = 1) {
+export function getHistoryRecent(page = 1) {
   let accountHistorysData = store.historys;
 
   let template = `
