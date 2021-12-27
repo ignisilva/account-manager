@@ -393,17 +393,12 @@ li {
   height: 49px;
   min-width: 162px;
 
-  font-size: 12px;
-  line-height: 18px;
-
   background: #dadada;
   border-radius: 6px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  color: #fff;
 
   position: relative;
 }
@@ -414,6 +409,7 @@ li {
 
   font-size: 12px;
   line-height: 18px;
+  color: #fff;
 }
 
 .account__history .history__saving .saving-box span {
@@ -422,6 +418,7 @@ li {
 
   font-size: 12px;
   line-height: 18px;
+  color: #fff;
 }
 
 .account__history .history__saving .saving-box .achieve {
