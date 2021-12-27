@@ -3,6 +3,7 @@ import { MainApi } from "../core/api";
 import View from "../core/view";
 import { Store } from "../store";
 import { MainData, SavingBox } from "../types";
+import { Account } from "../types/store.interface";
 
 const template = `
 <div class="wrap">
@@ -33,54 +34,10 @@ const template = `
   </nav>
   <section class="account">
     <header class="account__title">
-      <div class="profile">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/vNcXDb1es8vnIdHjdWZlgdxoodXjlu06kPc6yWjiE9wbPSJHeERV5CXaHcOv6OOtST1i8vTXzIScHHwgd-Mf0QXcX3LlsSKL_1JVq0DVcQ8DVA"
-          alt="profile"
-        />
-      </div>
-      <h2 class="subtitle">생활비</h2>
-      <ul class="options">
-        <li class="qr">
-          <span class="material-icons-outlined">
-            indeterminate_check_box
-          </span>
-        </li>
-        <li class="search">
-          <span class="material-icons-outlined"> search </span>
-        </li>
-      </ul>
+      {{__account_title__}}
     </header>
     <section class="account__status">
-      <h3 class="hide">status</h3>
-      <div class="status__total">
-        <div class="status__account-num">
-          <strong>355-673877-78773</strong>
-          <span>이체</span>
-        </div>
-        <div class="status__account-balance">
-          <strong>1,240,000</strong><span>원</span>
-        </div>
-        <div class="status__graph">
-          <div class="bar">
-            <div class="total"></div>
-            <div class="now"></div>
-            <div class="set">
-              <div class="controller"></div>
-            </div>
-          </div>
-        </div>
-        <div class="chart icon-cover">
-          <div class="icon icon--chart"></div>
-        </div>
-        <span class="status__summary">5일 동안 210,000원 남음</span>
-      </div>
-      <aside class="ad">
-        <a href="javascript:void(0)">
-          지금 낮은 이자로 생활대출을 신청하세요!
-        </a>
-        <a href="javascript:void(0)">Go</a>
-      </aside>
+      {{__account_status__}}
     </section>
     <section class="account__history">
       <h3 class="hide">history</h3>
@@ -113,10 +70,19 @@ export default class MainView extends View {
 
   render = (): void => {
     this.setTemplateData(
+      "account_title",
+      this.makeAccountTitle(this.store.getAccount())
+    );
+
+    this.setTemplateData(
+      "account_status",
+      this.makeAccountStatus(this.store.getAccount())
+    );
+
+    this.setTemplateData(
       "history_saving",
       this.makeHistorySaving(this.store.getSavingBoxes())
     );
-
     this.setTemplateData(
       "history_recent",
       this.makeHistoryRecent(this.api.getData())
@@ -124,6 +90,66 @@ export default class MainView extends View {
 
     this.updateView();
   };
+
+  private makeAccountTitle({ profile, title }: Account): string {
+    this.addHtml(`
+      <div class="profile">
+        <img
+          src="${profile}"
+          alt="profile"
+        />
+      </div>
+      <h2 class="subtitle">${title}</h2>
+      <ul class="options">
+        <li class="qr">
+          <span class="material-icons-outlined">
+            indeterminate_check_box
+          </span>
+        </li>
+        <li class="search">
+          <span class="material-icons-outlined"> search </span>
+        </li>
+      </ul>
+    `);
+
+    return this.getHtml();
+  }
+
+  private makeAccountStatus({ accountNum, balance }: Account): string {
+    this.addHtml(`
+      <h3 class="hide">status</h3>
+      <div class="status__total">
+        <div class="status__account-num">
+          <strong>${accountNum}</strong>
+          <span>이체</span>
+        </div>
+        <div class="status__account-balance">
+          <strong>${numToWon(balance)}</strong><span>원</span>
+        </div>
+        <div class="status__graph">
+          <div class="bar">
+            <div class="total"></div>
+            <div class="now"></div>
+            <div class="set">
+              <div class="controller"></div>
+            </div>
+          </div>
+        </div>
+        <div class="chart icon-cover">
+          <div class="icon icon--chart"></div>
+        </div>
+        <span class="status__summary">5일 동안 210,000원 남음</span>
+      </div>
+      <aside class="ad">
+        <a href="javascript:void(0)">
+          지금 낮은 이자로 생활대출을 신청하세요!
+        </a>
+        <a href="javascript:void(0)">Go</a>
+      </aside>
+    `);
+
+    return this.getHtml();
+  }
 
   private makeHistorySaving(savingBoxes: SavingBox[]): string {
     this.addHtml(`<div class="swiper-wrapper">`);
