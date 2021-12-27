@@ -1,3 +1,15 @@
+const mouseMotion = {
+  isMove: false,
+  before: {
+    x: 0,
+    y: 0,
+  },
+  after: {
+    x: 0,
+    y: 0,
+  },
+};
+
 function downHandler(e) {
   mouseMotion.isMove = true;
   mouseMotion.before.x = e.clientX;
@@ -14,11 +26,11 @@ function upHandler(e) {
   const diffY = mouseMotion.after.y - mouseMotion.before.y;
 
   // for X
-  if (diffX > 0) {
-    console.log("to left");
-  } else if (diffX < 0) {
-    console.log("to right");
-  }
+  // if (diffX > 0) {
+  //   console.log("to left");
+  // } else if (diffX < 0) {
+  //   console.log("to right");
+  // }
 
   // for Y
   if (diffY > 0) {
@@ -43,6 +55,6 @@ function nowWH() {
 // mouse/touch up down events
 //============================
 window.addEventListener("mousedown", downHandler);
-window.addEventListener("touchstart", downHandler);
+// window.addEventListener("touchstart", downHandler);
 window.addEventListener("mouseup", upHandler);
-window.addEventListener("touchend", upHandler);
+// window.addEventListener("touchend", upHandler);
