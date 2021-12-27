@@ -1,6 +1,16 @@
 import Swiper from "swiper";
 
-const swiper = new Swiper(".history__saving", {
-  slidesPerView: "auto",
-  spaceBetween: 16,
-});
+class SwiperRunner {
+  constructor() {
+    setTimeout(this.swiperStart, 0);
+  }
+
+  swiperStart() {
+    new Swiper(".history__saving", {
+      slidesPerView: "auto",
+      spaceBetween: 16,
+    });
+  }
+}
+
+new SwiperRunner();
