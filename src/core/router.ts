@@ -3,32 +3,28 @@ import View from "./view";
 
 export default class Router {
   private isStart: boolean;
-  private defaultRoute: RouteInfo | null;
-  private routeTable: RouteInfo[];
+  defaultRoute: RouteInfo | null;
+  routeTable: RouteInfo[];
 
   constructor() {
     this.isStart = false;
-    this.defaultRoute = null;
     this.routeTable = [];
+    this.defaultRoute = null;
 
-    window.addEventListener("hashchange", this.route.bind(this));
+    window.addEventListener("hashchange", this.route.bind(this)); // 4-6 참조
   }
 
-  public setDefaultPage(page: View, params: RegExp | null = null): void {
+  setDefaultPage(page: View, params: RegExp | null = null): void {
     this.defaultRoute = { path: "", page, params };
-  }
-
-  public addRoutePath(
-    path: string,
-    page: View,
-    params: RegExp | null = null
-  ): void {
-    this.routeTable.push({ path, page, params });
 
     if (!this.isStart) {
       this.isStart = true;
       setTimeout(this.route.bind(this), 0);
     }
+  }
+
+  addRoutePath(path: string, page: View, params: RegExp | null = null): void {
+    this.routeTable.push({ path, page, params });
   }
 
   private route() {
@@ -39,6 +35,7 @@ export default class Router {
       return;
     }
 
+    // routeInfo를 List가 아니라 Map 같은걸로 변경해서 개선할 수 있을 듯
     for (const routeInfo of this.routeTable) {
       if (routePath.indexOf(routeInfo.path) >= 0) {
         if (routeInfo.params) {
@@ -50,7 +47,6 @@ export default class Router {
         } else {
           routeInfo.page.render();
         }
-
         return;
       }
     }
