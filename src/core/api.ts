@@ -18,17 +18,6 @@ export class MainApi extends Api {
   }
 
   getData() {
-    const datas = this.request("");
-    const map = new Map();
-    datas.forEach((data) => {
-      const key = `${data.date}`;
-      if (!map.has(key)) {
-        map.set(key, []);
-      }
-      const values = [...map.get(key), data];
-      map.set(key, values);
-    });
-
-    return map;
+    return this.request("");
   }
 }
