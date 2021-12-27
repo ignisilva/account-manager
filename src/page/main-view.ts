@@ -1,4 +1,8 @@
+import { numToWon } from "../common/utils";
+import { MainApi } from "../core/api";
 import View from "../core/view";
+import { Store } from "../store";
+import { MainData, SavingBox } from "../types";
 
 const template = `
 <div class="wrap">
@@ -97,11 +101,126 @@ const template = `
 `;
 
 export default class MainView extends View {
-  constructor(containerId: string) {
+  private store: Store;
+  private api: MainApi;
+
+  constructor(containerId: string, store: Store) {
     super(containerId, template);
+
+    this.store = store;
+    this.api = new MainApi();
   }
 
   render = (): void => {
+    this.setTemplateData(
+      "history_saving",
+      this.makeHistorySaving(this.store.getSavingBoxes())
+    );
+
+    this.setTemplateData(
+      "history_recent",
+      this.makeHistoryRecent(this.api.getData())
+    );
+
     this.updateView();
   };
+
+  private makeHistorySaving(savingBoxes: SavingBox[]): string {
+    this.addHtml(`<div class="swiper-wrapper">`);
+
+    for (let i = 0; i < savingBoxes.length; i++) {
+      const { title, saving_goal, saving_now } = savingBoxes[i];
+      this.addHtml(`
+        <div class="saving-box swiper-slide">
+          <div class="achieve"></div>
+          <strong>${title}</strong>
+          <span class="price">${numToWon(saving_goal)}원</span>
+        </div>
+      `);
+    }
+
+    this.addHtml(`
+      <div class="add-btn swiper-slide">
+        <span class="material-icons-outlined">add_circle</span>
+        <span class="text">저금통 만들기</span>
+      </div>
+    `);
+    this.addHtml(`</div>`);
+
+    return this.getHtml();
+  }
+
+  private makeHistoryRecent(datas: MainData[]) {
+    // data 정제
+    const map = new Map<string, MainData[]>();
+    datas.forEach((data) => {
+      const key = `${data.date}`;
+      if (!map.has(key)) {
+        map.set(key, []);
+      }
+      const oldValue = map.get(key);
+      if (oldValue) {
+        const values = [...oldValue, data];
+        map.set(key, values);
+      }
+    });
+
+    // getHistoryRecent
+    this.addHtml(`<div class="container hide-scroll">`);
+
+    map.forEach((daysData) => {
+      let numOfDaysPassed: string = "";
+      let totalSpend: number = 0;
+
+      if (numOfDaysPassed === "") {
+        const dayData = daysData[0];
+        const today = new Date();
+        const [year, month, day] = dayData.date
+          .split("-")
+          .map((value) => +value);
+        const dayAgo = new Date(year, month + 1, day);
+
+        const diffDay = Math.floor(
+          (today.getTime() - dayAgo.getTime()) / (1000 * 60 * 60 * 24)
+        );
+        numOfDaysPassed =
+          diffDay === 0 ? "오늘" : diffDay === 1 ? "어제" : `${diffDay}일전`;
+      }
+
+      daysData.forEach((dayData) => {
+        totalSpend += dayData.income === "out" ? -dayData.price : dayData.price;
+      });
+
+      const totalSpendWon =
+        totalSpend > 0
+          ? numToWon(Math.abs(totalSpend)) + "원 수입"
+          : numToWon(Math.abs(totalSpend)) + "원 지출";
+
+      this.addHtml(`
+        <div class="day">
+          <div class="day-summary">
+            <strong>${numOfDaysPassed}</strong>
+            <span class="total-spend">${totalSpendWon}</span>
+          </div>
+      `);
+      this.addHtml(`<ul>`);
+      daysData.forEach((dayData) => {
+        this.addHtml(`
+          <li>
+            ${dayData.history}
+            ${
+              dayData.income === "out"
+                ? `<span>${numToWon(dayData.price)}</span>`
+                : `<span class="income">+${numToWon(dayData.price)}</span>`
+            }
+          </li>
+        `);
+      });
+      this.addHtml(`</ul>`);
+      this.addHtml("</div>");
+    });
+    this.addHtml(`</div>`);
+
+    return this.getHtml();
+  }
 }
