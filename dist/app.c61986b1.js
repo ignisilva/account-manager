@@ -1091,6 +1091,42 @@ module.exports = {
     "classify": "mart",
     "history": "Costco",
     "price": 135000
+  }, {
+    "date": "2021-12-26",
+    "income": "out",
+    "classify": "eatout",
+    "history": "버거킹",
+    "price": 20000
+  }, {
+    "date": "2021-12-26",
+    "income": "out",
+    "classify": "mart",
+    "history": "emart",
+    "price": 135000
+  }, {
+    "date": "2021-12-26",
+    "income": "in",
+    "classify": "",
+    "history": "국민지원금",
+    "price": 250000
+  }, {
+    "date": "2021-12-27",
+    "income": "out",
+    "classify": "eatout",
+    "history": "롯데리아",
+    "price": 14000
+  }, {
+    "date": "2021-12-27",
+    "income": "out",
+    "classify": "mart",
+    "history": "homeplus",
+    "price": 15000
+  }, {
+    "date": "2021-12-27",
+    "income": "in",
+    "classify": "",
+    "history": "용돈",
+    "price": 100000
   }]
 };
 },{}],"core/api.ts":[function(require,module,exports) {
@@ -1392,7 +1428,7 @@ var MainView = /*#__PURE__*/function (_view_1$default) {
               month = _dayData$date$split$m2[1],
               day = _dayData$date$split$m2[2];
 
-          var dayAgo = new Date(year, month + 1, day);
+          var dayAgo = new Date(year, month - 1, day);
           var diffDay = Math.floor((today.getTime() - dayAgo.getTime()) / (1000 * 60 * 60 * 24));
           numOfDaysPassed = diffDay === 0 ? "오늘" : diffDay === 1 ? "어제" : "".concat(diffDay, "\uC77C\uC804");
         }
@@ -1574,7 +1610,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49869" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49745" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

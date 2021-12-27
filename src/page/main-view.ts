@@ -204,7 +204,8 @@ export default class MainView extends View {
         const [year, month, day] = dayData.date
           .split("-")
           .map((value) => +value);
-        const dayAgo = new Date(year, month + 1, day);
+
+        const dayAgo = new Date(year, month - 1, day);
 
         const diffDay = Math.floor(
           (today.getTime() - dayAgo.getTime()) / (1000 * 60 * 60 * 24)
